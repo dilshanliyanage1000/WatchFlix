@@ -1,5 +1,5 @@
 # WatchFlix  
-A dynamic movie streaming platform built with **ASP.NET Core MVC**. CineQuest lets users sign up, upload movies, and manage movie details effortlessly. Other users can explore movies, share their thoughts through comments, and rate their favorites. The app leverages **AWS services** for seamless storage and data management.
+A dynamic movie streaming platform built with **ASP.NET Core MVC**. This application lets users sign up, upload movies, and manage movie details effortlessly. Other users can explore movies, share their thoughts through comments, and rate their favorites. The app leverages **AWS services** for seamless storage and data management.
 
 ---
 
