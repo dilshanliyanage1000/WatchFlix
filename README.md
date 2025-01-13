@@ -1,5 +1,5 @@
 # WatchFlix  
-A dynamic movie streaming platform built with **ASP.NET Core MVC**. This application lets users sign up, upload movies, and manage movie details effortlessly. Other users can explore movies, share their thoughts through comments, and rate their favorites. The app leverages **AWS services** for seamless storage and data management.
+WatchFlix is a movie streaming platform designed as a community-driven alternative to Netflix. Built with ASP.NET Core MVC, the application allows users to sign up, upload movies, and manage movie details. Users can explore a wide range of films, add comments, and rate them, creating an interactive experience. Leveraging AWS services, WatchFlix ensures efficient storage and management of movie data, fostering a vibrant movie community.
 
 ---
 
