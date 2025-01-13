@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WatchFlix!</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    @if (Context.Session.GetString("UserId") != null)
+    {
+        <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #1c2227;">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Movies" asp-action="Dashboard" style="color: white;"><strong>WatchFlix!</strong></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" style="flex-grow:1;">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Dashboard" style="color: white;">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Index" style="color: white;">Manage Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Logout" style="color: white;">Logout</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;">Hello, @Context.Session.GetString("FullName")!</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    }
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

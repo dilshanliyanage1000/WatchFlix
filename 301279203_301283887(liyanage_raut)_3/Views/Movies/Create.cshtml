@@ -1,0 +1,76 @@
+﻿@model _301279203_301283887_liyanage_raut__3.Models.AddMovie
+
+<div class="login-content-area">
+
+	<main class="login-container">
+
+		<div class="content-wrapper">
+
+			<h1 class="display-6 mt-2 fw-semibold">Create Movie</h1>
+
+			<div class="mt-2 mb-2">
+				<a asp-action="Index" style="text-decoration: none; color: aquamarine;">Back to Movies</a>
+			</div>
+
+			<form asp-action="Create" method="post" class="mt-2" enctype="multipart/form-data">
+
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+				<div class="form-group mb-3">
+					<label asp-for="Title" class="control-label">Movie Title</label>
+					<input asp-for="Title" class="form-control width-300 custom-tb mt-2" />
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mb-3">
+					<label asp-for="Genre" class="control-label">Genre</label>
+					<select asp-for="Genre" class="form-select width-300 custom-tb mt-2" aria-label="Default select example" required>
+						<option selected>Select Genre</option>
+						<option value="Action">Action</option>
+						<option value="Adventure">Adventure</option>
+						<option value="Comedy">Comedy</option>
+						<option value="Drama">Drama</option>
+						<option value="Fantasy">Fantasy</option>
+						<option value="Historical">Historical</option>
+						<option value="Horror">Horror</option>
+						<option value="Mystery">Mystery</option>
+						<option value="Romance">Romance</option>
+						<option value="Science Fiction">Science Fiction</option>
+					</select>
+				</div>
+
+				<div class="form-group mb-3">
+					<label asp-for="Director" class="control-label">Director</label>
+					<input asp-for="Director" class="form-control width-300 mt-2 custom-tb" />
+					<span asp-validation-for="Director" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mb-3">
+					<label asp-for="ReleaseDate" class="control-label">Movie Release Date</label>
+					<input asp-for="ReleaseDate" type="date" class="form-control mt-2 width-300 custom-tb" />
+					<span asp-validation-for="ReleaseDate" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mb-3">
+					<label asp-for="MovieUploadFile" class="control-label">Upload Movie File</label>
+					<input asp-for="MovieUploadFile" type="file" class="form-control mt-2 width-300 custom-tb" accept="video/*" />
+					<span asp-validation-for="MovieUploadFile" class="text-danger"></span>
+				</div>
+
+				<br />
+
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary width-300 d-flex justify-content-center" />
+				</div>
+
+			</form>
+
+		</div>
+
+	</main>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

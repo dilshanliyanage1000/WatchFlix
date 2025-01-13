@@ -1,0 +1,101 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<_301279203_301283887_liyanage_raut__3.Models.Movie>
+
+<div class="container main-content-area">
+
+	<div class="row align-items-center">
+		<h1 class="display-4">Hello, @Context.Session.GetString("FullName")!</h1>
+		<p>Welcome to WatchFlix! Browse and watch any movies!</p>
+    </div>
+
+    <div class="row">
+
+		<form id="searchForm" method="get" style="width:500px;" action="@Url.Action("SearchRating", "Movies")">
+            <div style="margin-top:1rem;">
+                <div class="input-group">
+                    <select for="rating" class="form-select custom-tb" name="rating">
+                        <option selected>Select Rating</option>
+                        <option value="9">Rating > 9</option>
+                        <option value="8">Rating > 8</option>
+                        <option value="7">Rating > 7</option>
+                        <option value="6">Rating > 6</option>
+                        <option value="5">Rating > 5</option>
+					</select>
+                    <button class="btn btn-warning" type="submit">Filter by Rating</button>
+                </div>
+            </div>
+        </form>
+
+        <form id="searchForm" method="get" style="width:500px;" action="@Url.Action("SearchGenre", "Movies")">
+            <div style="margin-top:1rem;">
+                <div class="input-group">
+                    <select for="genre" class="form-select width-300 custom-tb" name="genre">
+                        <option selected>Select Genre</option>
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Historical">Historical</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Science Fiction">Science Fiction</option>
+                    </select>
+                    <button class="btn btn-warning" type="submit">Filter by Genre</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-md-2" style="margin-top:1rem;">
+            <button class="btn btn-secondary" type="button" onclick="window.location.href = '@Url.Action("Dashboard","Movies")'">Clear Filters</button>
+        </div>
+
+
+    </div>
+
+    <div class="row" style="margin-top: 2rem">
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-info text-center mt-5" role="alert">
+                No movies available.
+            </div>
+
+        } else {
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm">
+
+                        <a href="@Url.Action("ViewMovie", "Movies", new { id = item.MovieId })" style="padding: 5px;">
+                            <img src="https://beanscafe.org/wp-content/uploads/2021/04/Video-Placeholder.jpg" class="card-img-top" alt="Movie Image" style="border-radius: 10px;">
+                        </a>
+
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">
+                                <strong>Rating:</strong>&nbsp;✰&nbsp;@item.Rating / 10
+                                <br />
+                                <strong>Genre:</strong> @item.Genre
+                                <br />
+                                <strong>Director:</strong> @item.Director
+                                <br />
+                                <strong>Release Date:</strong> @item.ReleaseDate
+                            </p>
+
+                            <form asp-action="ViewMovie" asp-controller="Movies" asp-route-id="@item.MovieId" class="d-inline">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-success" type="submit">Watch Video</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        
+    </div>
+</div>

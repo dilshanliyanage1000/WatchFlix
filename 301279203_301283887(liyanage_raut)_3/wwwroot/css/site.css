@@ -1,0 +1,87 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #1D1F21;
+    color: white;
+    height: 100vh;
+}
+
+.img-bg {
+    background-image: url('../img/netflix-library-photo-scaled.png');
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    height: 80px;
+}
+
+.main-content-area {
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+}
+
+.login-content-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    border: 5px solid #253038;
+    background-color: #1C2227;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(54, 54, 54, 0.1);
+}
+
+.custom-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 767.98px) {
+    .custom-container {
+        max-width: 540px;
+    }
+}
+
+.width-300 {
+    width: 300px;
+}
+
+.custom-tb {
+    background-color: #262c32;
+    border: solid #32393f;
+    color: white;
+}
+
+.custom-tb:focus {
+    background-color: #262c32;
+    color: white;
+    outline: none;
+}
+
+.card {
+    background-color: #1c2227;
+    border: solid #32393f;
+    border-radius: 10px;
+}

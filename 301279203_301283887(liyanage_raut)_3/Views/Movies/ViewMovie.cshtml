@@ -1,0 +1,166 @@
+﻿@model _301279203_301283887_liyanage_raut__3.Models.Movie
+
+@{
+    var userId = Context.Session.GetInt32("UserId");
+}
+
+<div class="container main-content-area">
+
+    <h1>@Model.Title</h1>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <p><strong>Genre:</strong> @Model.Genre | <strong>Director:</strong> @Model.Director | <strong>Release Date:</strong> @Model?.ReleaseDate | Rating: @Model?.Rating </p>
+        </div>
+
+        <video controls autoplay src="@Model?.S3Url" type="video/mp4" width="400">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="d-flex align-items-center mt-3">
+            <a href="@Model?.S3Url" class="btn btn-success ms-auto" download>Download Movie</a>
+        </div>
+
+    </div>
+
+    <!-- Comment Form -->
+    <div class="mt-4">
+        <h4>Leave a Comment</h4>
+        <form asp-action="AddComment" asp-controller="Movies" method="post">
+
+			<div class="form-group mb-3">
+                <select for="rating" name="rating" class="form-select custom-tb" aria-label="Default select example" required>
+                    <option selected>Select Rating</option>
+					<option value="10">10</option>
+					<option value="9">9</option>
+					<option value="8">8</option>
+					<option value="7">7</option>
+					<option value="6">6</option>
+					<option value="5">5</option>
+					<option value="4">4</option>
+					<option value="3">3</option>
+					<option value="2">2</option>
+					<option value="1">1</option>
+				</select>
+            </div>
+
+            <div class="form-group mb-3">
+                <textarea for="comment" name="comment" class="form-control custom-tb" rows="3" placeholder="Write your comment here..." required></textarea>
+            </div>
+
+            <input type="hidden" name="UserId" value="@Context.Session.GetInt32("UserId")" />
+            <input type="hidden" name="MovieId" value="@Model?.MovieId" />
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+    </div>
+
+    @if (Model?.Comments != null && Model.Comments.Count > 0)
+    {
+        <div class="mt-5">
+
+            <h4 class="mb-3">Comments</h4>
+
+            <ul class="list-group">
+                @foreach (var comment in Model.Comments)
+                {
+                    <li class="list-group-item mb-1 mt-1 custom-tb">
+                        <strong>@comment.FullName:</strong>
+                        <br/>
+                        @comment.Content
+                        <span class="float-end">
+                            <strong>Rating:</strong> @comment.Rating / 10
+                        </span>
+                        <br />
+                        <br />
+                        <small class="text-hint">
+                            @{
+                                DateTime postedAtDateTime = comment.PostedAt ?? DateTime.Now;
+                                string formattedPostedAt = postedAtDateTime.ToLocalTime().ToString("f");
+                                TimeSpan timeSincePosted = DateTime.Now - postedAtDateTime;
+                            }
+                            @formattedPostedAt
+                        </small>
+
+                        <br />
+                        <br />
+
+                        @if (comment.UserId == userId && comment.PostedAt > DateTime.Now.AddHours(-24))
+                        {
+                            <div>
+                                <a href="#" class="btn btn-warning btn-sm"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#editCommentModal"
+                                   onclick="loadCommentIntoModal('@comment.UserId', '@Model?.MovieId', '@comment.CommentId', '@comment.Content', '@comment.Rating')">
+                                    Edit
+                                </a>
+
+                            </div>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+<!-- Edit Comment Modal -->
+<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content" style="background-color: #1C2227;">
+
+            <form asp-action="EditComment" asp-controller="Movies" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" id="editCommentId" for="commentId" name="commentId" readonly class="form-control mb-3 width-300 custom-tb"  />
+                    <input type="hidden" id="editUserId" for="userId" name="userId" readonly class="form-control mb-3 width-300 custom-tb"  />
+                    <input type="hidden" id="editMovieId" for="movieId" name="movieId" readonly class="form-control mb-3 width-300 custom-tb"  />
+
+                    <div class="form-group mb-3">
+                        <label for="editCommentRating">Rating</label>
+                        <select for="rating" id="editCommentRating" name="rating" class="form-select width-300 custom-tb" aria-label="Default select example" required>
+                            <option selected>Select Rating</option>
+                            <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="editCommentContent">Comment</label>
+                        <textarea id="editCommentContent" for="content" name="content" class="form-control width-300 custom-tb" rows="3" required></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update Comment</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function loadCommentIntoModal(userId, movieId, commentId, content, rating) {
+        document.getElementById("editCommentId").value = commentId;
+        document.getElementById("editUserId").value = userId;
+        document.getElementById("editMovieId").value = movieId;
+        document.getElementById("editCommentContent").value = content;
+        document.getElementById("editCommentRating").value = rating;
+    }
+</script>
